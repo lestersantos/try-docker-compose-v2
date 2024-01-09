@@ -189,4 +189,71 @@ The main purpose of a `CMD` is to provide defaults for an executing container. I
 
 ## Step 3: Define services in a Compose file.
 
-Create a file called `compose.yaml`
+Create a file called `compose.yaml` in your project directory and paste the following:
+
+```yml
+services:
+  web:
+    build: .
+    ports:
+      - "8000:5000"
+  redis:
+    image: "redis:alpine"
+```
+
+#### The Compose file
+
+[The Compose file](https://docs.docker.com/compose/compose-file/03-compose-file/#compose-file)
+
+The default path for a Compose file is `compose.yaml` or `compose.yml`; (`.yaml`) is preffered, the file
+it's placed in the working direcoty. Compose also supports `docker-compose.yaml`or `docker-compose.yml` but they are use for backwards compatibility of earlier versions.
+
+#### Using Compose:
+
+[Docker Compose Features uses](https://docs.docker.com/compose/features-uses/)
+
+Using Compose is essentially a three-step process:
+
+1. Define your app's environment with a `Dockerfile` so it can be reproduced anywhere.
+2. Define the `services` that make up your app in a c`compose.yaml` file so they can be `run together in an isolated environment`
+3. Run `docker compose up` and the Docker compose command starts and runs your entire app.
+
+[The Compose application model](https://docs.docker.com/compose/compose-file/02-model/#the-compose-application-model)
+
+Compose lets you define an application with containers for multiple platforms, with adequate shared resources and communication channels.
+
+[Docker Compose Service](https://docs.docker.com/compose/compose-file/05-services/)
+
+- **Services:** Are computing components of an application, is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components.
+
+[Docker Compose version, and names for services](https://docs.docker.com/compose/compose-file/04-version-and-name/)
+
+- **Version:** `When I started learning docker a few years ago I used to use the `version` ` property, I was thought to use this but without further explanation it was like a default thing you have to use when writting docker compose.
+
+Now documentation states that `version` property it's only informative, you can define it but it will only be used for backward compatibilty.
+
+Compose doesn't use `version` to select an exact schema to validate the Compose file, but prefers the
+most recent schema when it's implemented.
+
+
+This docker compose file defines two services: `web` and `redis`.
+
+- The `web` service uses an image that's built from the `Dockerfile` in the current directory.
+- It then binds the container and the host machine to the exposed port, 8000
+- This example service uses the default port for the Flask web server, 5000.
+
+[Compose Build subsection](https://docs.docker.com/compose/compose-file/build/#compose-build-specification)
+
+The Compose Build Specification lets you define the build process within a Compose file in a portable way.
+
+- The `redis` service uses a public `Redis` image pulled from the Docker Hub registry.
+
+[Compose service image attribute](https://docs.docker.com/compose/compose-file/05-services/#image)
+
+- `image` specifies the image to start the container from. Pulling the image is the default behavior.
+
+[Docker compose ports attribute](https://docs.docker.com/compose/compose-file/05-services/#ports)
+
+- `ports:` Exposes container ports. [HOST:]CONTAINER[/PROTOCOL]
+           If no host port specified, Compose automatically allocates any unassigned port of the host.
+- `HOST:CONTAINER` should always be specified as a (quoted) string, to avoid conflicts with yaml.
