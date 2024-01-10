@@ -257,3 +257,53 @@ The Compose Build Specification lets you define the build process within a Compo
 - `ports:` Exposes container ports. [HOST:]CONTAINER[/PROTOCOL]
            If no host port specified, Compose automatically allocates any unassigned port of the host.
 - `HOST:CONTAINER` should always be specified as a (quoted) string, to avoid conflicts with yaml.
+
+## Step 4: Build and run your app with Compose.
+
+1. From your project directory, start up your application by running `docker compose up`.
+
+```docker
+$ docker compose up
+
+[+] Running 9/9
+ ✔ redis 8 layers [⣿⣿⣿⣿⣿⣿⣿⣿]      0B/0B      Pulled                                                               12.4s
+   ✔ 661ff4d9561e Pull complete                                                                                    4.3s
+   ✔ 0235bd0a3e9b Pull complete                                                                                    4.6s
+   ✔ 003d22e43376 Pull complete                                                                                    5.9s
+   ✔ 4f3278ab7ee0 Pull complete                                                                                    6.0s
+[+] Building 48.8s (10/12)
+
+.
+.
+.
+
+ ✔ Network composetest_default    Created                                                                          0.2s
+ ✔ Container composetest-redis-1  Created                                                                          0.6s
+ ✔ Container composetest-web-1    Created                                                                          0.6s
+Attaching to composetest-redis-1, composetest-web-1
+.
+.
+.
+ ✔ Network composetest_default    Created                                                                          0.2s
+ ✔ Container composetest-redis-1  Created                                                                          0.6s
+ ✔ Container composetest-web-1    Created                                                                          0.6s
+Attaching to composetest-redis-1, composetest-web-1
+```
+
+Compose pull a `Redis` image, builds an image for your code, and starts the services you defined.
+In this case, `the code is statically copied into the image at build time`.
+
+2. Enter `http://localhost:8000/` in a browser to see the application running.
+
+3. Refresh the page. The number should increment.
+
+4. Open another terminal window, and type `docker images` to list local images.
+
+```bash
+e2aaafb967da   redis:alpine      "docker-entrypoint.s…"   3 hours ago   Up 7 seconds              6379/tcp                 composetest-redis-1
+8221eb7d005f   composetest-web   "flask run"              3 hours ago   Up 7 seconds              0.0.0.0:8000->5000/tcp   composetest-web-1
+9ccb93d200ca   python            "/bin/bash"              4 days ago    Exited (130) 4 days ago                            laughing_nobel
+```
+
+5. Stop the application, either by running `docker compose down` from within your project directory in the
+second terminal, or by hitting `CTRL+C` in the orginal terminal where you started the app.
