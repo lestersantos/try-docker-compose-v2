@@ -295,11 +295,16 @@ In this case, `the code is statically copied into the image at build time`.
 
 2. Enter `http://localhost:8000/` in a browser to see the application running.
 
+![image](https://github.com/lestersantos/try-docker-compose-v2/assets/30423581/1bb7c9ce-66c4-4f0b-8d0a-574acf68b44d)
+
 3. Refresh the page. The number should increment.
+
+![image](https://github.com/lestersantos/try-docker-compose-v2/assets/30423581/3276bfe2-04fa-4e2e-8e8c-0fa7bb96d88d)
 
 4. Open another terminal window, and type `docker images` to list local images.
 
 ```bash
+CONTAINER ID   IMAGE             COMMAND                  CREATED       STATUS                    PORTS                    NAMES
 e2aaafb967da   redis:alpine      "docker-entrypoint.s…"   3 hours ago   Up 7 seconds              6379/tcp                 composetest-redis-1
 8221eb7d005f   composetest-web   "flask run"              3 hours ago   Up 7 seconds              0.0.0.0:8000->5000/tcp   composetest-web-1
 9ccb93d200ca   python            "/bin/bash"              4 days ago    Exited (130) 4 days ago                            laughing_nobel
@@ -307,3 +312,13 @@ e2aaafb967da   redis:alpine      "docker-entrypoint.s…"   3 hours ago   Up 7 s
 
 5. Stop the application, either by running `docker compose down` from within your project directory in the
 second terminal, or by hitting `CTRL+C` in the orginal terminal where you started the app.
+
+```bash
+composetest-web-1    | Press CTRL+C to quit
+composetest-web-1    | 172.18.0.1 - - [10/Jan/2024 20:13:24] "GET / HTTP/1.1" 200 -
+composetest-web-1    | 172.18.0.1 - - [10/Jan/2024 20:28:59] "GET / HTTP/1.1" 200 -
+[+] Stopping 2/2ing... (press Ctrl+C again to force)
+ ✔ Container composetest-redis-1  Stopped                                                                          0.5s
+ ✔ Container composetest-web-1    Stopped                                                                         10.4s
+canceled
+```
