@@ -369,7 +369,7 @@ You can use `volumes` to define multiple types of mounts: `volume`, `binds`, `tm
 be declared.
 - Syntax `VOLUME:CONTAINER_PATH`.
 
-# Step 6: Re-build and run the app with Compose
+## Step 6: Re-build and run the app with Compose
 
 Now that changes where made to `compose.yaml` file, from your project directory, type `docker compose up` to build the app with the updated Compose file, and run it. We didn't touch the code just the definition of our services in the docker compose file.
 
@@ -390,3 +390,34 @@ web-1    |  * Restarting with stat
 web-1    |  * Debugger is active!
 web-1    |  * Debugger PIN: 124-770-505
 ```
+
+## Step 7: Update the application
+
+The application code is now mounted into the container using a volume, you can make changes to its code
+and see the changes instantly, without having to rebuild the image.
+
+When we first created our image, the initial code was copied from the project directory to the workdir `/code` inside the container, now the image is alreay created, but thanks to the `bind mount` we can
+make changes to the code in our project directory and they will be reflected instantly in our running
+container.
+
+- Change the greeting in `app.py` and save it. For example, change the `Hello World!` message to
+`Hello from Docker!`.
+
+```python
+return 'Hello from Docker! I have been seen {} times.\n'.format(count)
+```
+
+- Refresh the app in your browser. The greeting should be updated, and the counter should still be
+incrementing.
+
+## The END
+
+This is the end of the tutorial for **Docker Compose V2**. This tutorial continues with 
+
+[Step 8: Experiment with some other commands](https://docs.docker.com/compose/gettingstarted/#step-8-experiment-with-some-other-commands)
+
+Where we can experiment with other `docker compose [OPTIONS] COMMAND`. 
+
+The reference for the docker compose commands can be found here 
+
+[Overview of docker compose CLI](https://docs.docker.com/compose/reference/)
